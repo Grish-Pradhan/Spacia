@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacia – Find Your Perfect Space, Right Now</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1D9E75;
+            --primary-dark: #0F7A5A;
+            --primary-light: #EBF7F2;
+            --accent: #F5A623;
+            --bg: #FDFCFB;
+            --surface: #FFFFFF;
+            --text: #1A1A1A;
+            --text-muted: #6B6B6B;
+            --text-light: #9E9E97;
+            --border: #E8E4DC;
+            --shadow: rgba(29, 158, 117, 0.08);
+            --shadow-lg: rgba(29, 158, 117, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ── NAVIGATION ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(253, 252, 251, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        nav.scrolled {
+            background: rgba(253, 252, 251, 0.95);
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 700;
+            color: var(--text); text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo-dot {
+            width: 8px; height: 8px; background: var(--primary);
+            border-radius: 50%; animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        .nav-links {
+            display: flex; gap: 2rem; list-style: none; align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none; font-weight: 500;
+            font-size: 0.95rem; transition: color 0.3s ease; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .cta-btn {
+            background: var(--primary); color: white; padding: 0.65rem 1.5rem;
+            border-radius: 100px; text-decoration: none; font-weight: 600;
+            font-size: 0.95rem; transition: all 0.3s ease; border: 2px solid var(--primary);
+        }
+        .cta-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 20px var(--shadow-lg); }
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.5rem; }
+        .menu-toggle span { width: 25px; height: 2px; background: var(--text); transition: all 0.3s ease; }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding: 8rem 2rem 4rem;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(29, 158, 117, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(245, 166, 35, 0.06) 0%, transparent 50%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px; opacity: 0.3; animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(60px,60px); } }
+        .hero-content { position: relative; z-index: 2; max-width: 1200px; text-align: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--primary-light); border: 1px solid var(--primary);
+            color: var(--primary-dark); padding: 0.5rem 1.25rem; border-radius: 100px;
+            font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+        .live-indicator { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+        h1 {
+            font-family: 'Fraunces', serif; font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+        h1 em { font-style: italic; color: var(--primary); display: inline-block; }
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem); color: var(--text-muted);
+            max-width: 700px; margin: 0 auto 3rem; font-weight: 400;
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-buttons {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.8s backwards;
+        }
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600;
+            font-size: 1.05rem; text-decoration: none; transition: all 0.3s ease;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-primary { background: var(--primary); color: white; border: 2px solid var(--primary); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px var(--shadow-lg); }
+        .btn-secondary { background: transparent; color: var(--text); border: 2px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ── SHARED ── */
+        .features { padding: 6rem 2rem; background: var(--surface); }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-tag {
+            display: inline-block; color: var(--primary); font-size: 0.9rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;
+        }
+        h2 {
+            font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700; line-height: 1.2; margin-bottom: 1rem;
+        }
+        .section-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .feature-card {
+            background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2.5rem; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: var(--primary); transform: scaleX(0); transition: transform 0.3s ease;
+        }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-lg); border-color: var(--primary); }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .feature-icon {
+            width: 60px; height: 60px; background: var(--primary-light); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+        }
+        .feature-icon svg { width: 30px; height: 30px; stroke: var(--primary); }
+        .feature-card h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--text); }
+        .feature-card p { color: var(--text-muted); line-height: 1.7; }
+
+        /* ── HOW IT WORKS ── */
+        .how-it-works { padding: 6rem 2rem; background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg) 100%); }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-top: 4rem; }
+        .step { position: relative; text-align: center; }
+        .step-number {
+            width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700;
+            margin: 0 auto 1.5rem; position: relative; z-index: 2;
+        }
+        .step::before {
+            content: ''; position: absolute; top: 30px; left: 50%; width: 100%;
+            height: 2px; background: var(--border); z-index: 1;
+        }
+        .step:last-child::before { display: none; }
+        .step h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 0.75rem; }
+        .step p { color: var(--text-muted); }
+
+        /* ── STATS ── */
+        .stats { padding: 6rem 2rem; background: var(--text); color: white; text-align: center; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-top: 3rem; }
+        .stat-item { padding: 2rem; }
+        .stat-number { font-family: 'Fraunces', serif; font-size: 3.5rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+        .stat-label { color: rgba(255,255,255,0.7); font-size: 1.1rem; }
+
+        /* ── CTA SECTION ── */
+        .cta-section { padding: 6rem 2rem; background: var(--primary); color: white; text-align: center; position: relative; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(0,0,0,0.1) 0%, transparent 50%); }
+        .cta-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        .cta-section h2 { color: white; margin-bottom: 1.5rem; }
+        .cta-section p { font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.9; }
+        .btn-white { background: white; color: var(--primary); padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; font-size: 1.05rem; text-decoration: none; display: inline-block; transition: all 0.3s ease; }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+        /* ── FOOTER ── */
+        footer { background: var(--text); color: white; padding: 4rem 2rem 2rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand { max-width: 300px; }
+        .footer-logo { font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .footer-brand p { color: rgba(255,255,255,0.7); line-height: 1.7; }
+        .footer-links h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 1rem; }
+        .footer-links ul { list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; display: block; padding: 0.5rem 0; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .social-links { display: flex; gap: 1rem; }
+        .social-links a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; }
+        .social-links a:hover { background: var(--primary); transform: translateY(-2px); }
+
+        /* ── PAGE SHELL ── */
+        .page { display: none; min-height: 100vh; padding: 7rem 2rem 4rem; }
+        .page.active { display: block; }
+        .page-hero { text-align: center; margin-bottom: 4rem; }
+        .page-hero h1 { margin-bottom: 1rem; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .content-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; transition: all 0.3s ease;
+        }
+        .content-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-lg); }
+        .content-card h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 1rem; }
+
+        /* ── FEATURES PAGE ── */
+        .feature-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin: 5rem 0; }
+        .feature-detail.reverse { direction: rtl; }
+        .feature-detail.reverse > * { direction: ltr; }
+        .feature-detail-text h3 { font-family: 'Fraunces', serif; font-size: 2rem; margin-bottom: 1rem; }
+        .feature-detail-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
+        .feature-detail-visual {
+            background: var(--primary-light); border-radius: 24px; padding: 3rem;
+            min-height: 280px; display: flex; align-items: center; justify-content: center;
+            font-size: 5rem; border: 1px solid var(--primary);
+        }
+        .check-list { list-style: none; margin-top: 1rem; }
+        .check-list li { padding: 0.4rem 0; color: var(--text-muted); display: flex; gap: 0.6rem; align-items: flex-start; }
+        .check-list li::before { content: '✓'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+        /* ── CITIES PAGE ── */
+        .city-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            overflow: hidden; transition: all 0.3s ease;
+        }
+        .city-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-lg); }
+        .city-card-header { padding: 2rem 2rem 1rem; }
+        .city-card-header h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .city-card-body { padding: 0 2rem 2rem; }
+        .city-card-body p { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7; }
+        .city-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .city-stat-num { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .city-stat-lbl { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .city-status-live { display: inline-block; background: var(--primary-light); color: var(--primary); padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .city-status-soon { display: inline-block; background: #FFF8E7; color: #B07D00; padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+        /* ── PRICING PAGE ── */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; align-items: start; }
+        .pricing-card {
+            background: var(--surface); border: 2px solid var(--border); border-radius: 24px;
+            padding: 2.5rem; position: relative; transition: all 0.3s ease;
+        }
+        .pricing-card:hover { box-shadow: 0 15px 40px var(--shadow-lg); }
+        .pricing-card.popular { border-color: var(--primary); }
+        .popular-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white; padding: 0.3rem 1.2rem;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+        }
+        .plan-name { text-transform: uppercase; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .plan-name.highlight { color: var(--primary); }
+        .plan-price { font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 700; line-height: 1; margin-bottom: 0.25rem; }
+        .plan-price span { font-size: 1.1rem; color: var(--text-muted); font-family: 'Manrope', sans-serif; font-weight: 400; }
+        .plan-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        .plan-features { list-style: none; margin-bottom: 2rem; }
+        .plan-features li { padding: 0.55rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.95rem; display: flex; gap: 0.5rem; align-items: center; }
+        .plan-features li:last-child { border-bottom: none; }
+        .plan-features li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+
+        /* ── ABOUT PAGE ── */
+        .about-story { max-width: 800px; margin: 0 auto 4rem; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 3rem; }
+        .about-story h3 { font-family: 'Fraunces', serif; font-size: 2rem; margin-bottom: 1.5rem; }
+        .about-story p { color: var(--text-muted); line-height: 1.9; margin-bottom: 1.25rem; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .team-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; text-align: center; transition: all 0.3s ease;
+        }
+        .team-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-lg); border-color: var(--primary); }
+
+        /* Photo upload wrapper */
+        .team-photo-wrap {
+            position: relative; width: 100px; height: 100px; margin: 0 auto 1.2rem; cursor: pointer;
+        }
+        .team-avatar {
+            width: 100px; height: 100px; border-radius: 50%; background: var(--primary-light);
+            border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center;
+            font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--primary);
+            overflow: hidden; transition: all 0.3s ease;
+        }
+        .team-avatar img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        }
+        .team-photo-overlay {
+            position: absolute; inset: 0; border-radius: 50%;
+            background: rgba(29,158,117,0.75); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease;
+            color: white; font-size: 0.7rem; font-weight: 600; gap: 4px;
+        }
+        .team-photo-overlay svg { width: 20px; height: 20px; stroke: white; }
+        .team-photo-wrap:hover .team-photo-overlay { opacity: 1; }
+        .team-photo-input { display: none; }
+
+        .team-card h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .team-card .role { color: var(--primary); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .team-card .bio { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+
+        /* ── CAREERS PAGE ── */
+        .job-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; transition: all 0.3s ease; }
+        .job-card:hover { border-color: var(--primary); box-shadow: 0 8px 24px var(--shadow); }
+        .job-tag { display: inline-block; background: var(--primary-light); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .job-card h4 { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 0.25rem; }
+        .job-card p { color: var(--text-muted); font-size: 0.92rem; }
+        .job-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .job-meta span { color: var(--text-light); font-size: 0.85rem; }
+
+        /* ── BLOG PAGE ── */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .blog-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--shadow-lg); }
+        .blog-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .blog-body { padding: 1.5rem; }
+        .blog-tag { display: inline-block; background: var(--primary-light); color: var(--primary); padding: 0.2rem 0.7rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .blog-card h4 { font-family: 'Fraunces', serif; font-size: 1.25rem; margin-bottom: 0.5rem; line-height: 1.35; }
+        .blog-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+        .blog-meta { display: flex; gap: 1rem; color: var(--text-light); font-size: 0.82rem; }
+
+        /* ── PRESS KIT PAGE ── */
+        .press-asset { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1rem; transition: all 0.3s ease; }
+        .press-asset:hover { border-color: var(--primary); }
+        .press-icon { width: 56px; height: 56px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+        .press-asset h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .press-asset p { color: var(--text-muted); font-size: 0.88rem; }
+        .press-dl { margin-left: auto; }
+
+        /* ── HELP CENTER PAGE ── */
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; cursor: pointer; gap: 1rem; }
+        .faq-question h4 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 500; }
+        .faq-icon { width: 28px; height: 28px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-size: 1.2rem; font-weight: 700; transition: transform 0.3s ease; }
+        .faq-answer { display: none; padding: 0 0 1.25rem; color: var(--text-muted); line-height: 1.8; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+        /* ── PARTNER PAGE ── */
+        .partner-benefit { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.75rem 0; border-bottom: 1px solid var(--border); }
+        .partner-benefit:last-child { border-bottom: none; }
+        .partner-benefit-icon { width: 52px; height: 52px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+        .partner-benefit h4 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.4rem; }
+        .partner-benefit p { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
+
+        /* ── INVESTORS PAGE ── */
+        .metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .metric-box { background: var(--primary-light); border: 1px solid var(--primary); border-radius: 16px; padding: 1.75rem; text-align: center; }
+        .metric-box .num { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700; color: var(--primary-dark); }
+        .metric-box .lbl { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; }
+        .raise-box { background: var(--text); color: white; border-radius: 24px; padding: 3rem; text-align: center; margin-top: 3rem; }
+        .raise-box h3 { font-family: 'Fraunces', serif; font-size: 2rem; margin-bottom: 1rem; }
+        .raise-box p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* ── CONTACT PAGE ── */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; }
+        .contact-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px var(--shadow); border-color: var(--primary); }
+        .contact-card .c-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .contact-card h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .contact-card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1rem; }
+        .contact-card a { color: var(--primary); font-weight: 600; text-decoration: none; word-break: break-all; }
+
+        /* ── DOWNLOAD PAGE ── */
+        .download-hero { text-align: center; padding: 2rem 0 4rem; }
+        .download-hero h1 { margin-bottom: 1rem; }
+        .app-stores { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+        .app-btn {
+            display: flex; align-items: center; gap: 1rem; background: var(--text); color: white;
+            padding: 0.9rem 2rem; border-radius: 14px; text-decoration: none; transition: all 0.3s ease;
+        }
+        .app-btn:hover { background: var(--primary); transform: translateY(-2px); }
+        .app-btn .small { font-size: 0.75rem; opacity: 0.8; }
+        .app-btn .big { font-size: 1.2rem; font-weight: 700; font-family: 'Fraunces', serif; }
+        .app-btn .store-icon { font-size: 2rem; }
+        .phone-mockup {
+            width: 280px; height: 560px; background: var(--text); border-radius: 40px; margin: 3rem auto;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2); position: relative; overflow: hidden;
+            border: 8px solid #333;
+        }
+        .phone-screen { width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary-light), #fff); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.5rem; }
+        .qr-placeholder { width: 120px; height: 120px; background: var(--text); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; }
+        .phone-screen p { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links { position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; background: var(--surface); flex-direction: column; padding: 6rem 2rem 2rem; box-shadow: -5px 0 20px var(--shadow); transition: right 0.3s ease; align-items: flex-start; }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; z-index: 1001; }
+            .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(7px,7px); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px,-7px); }
+            .hero { padding: 6rem 1rem 3rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+            .features, .how-it-works, .stats, .cta-section { padding: 4rem 1rem; }
+            .features-grid, .content-grid, .pricing-grid, .team-grid, .blog-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); gap: 2rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .step::before { display: none; }
+            .feature-detail { grid-template-columns: 1fr; gap: 2rem; }
+            .feature-detail.reverse { direction: ltr; }
+            .job-card { flex-direction: column; align-items: flex-start; }
+            .press-dl { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo" onclick="showPage('home'); return false;">
+            <div class="logo-dot"></div>
+            Spacia
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" class="active" onclick="showPage('home'); return false;">Home</a></li>
+            <li><a href="#" onclick="showPage('features'); return false;">Features</a></li>
+            <li><a href="#" onclick="showPage('cities'); return false;">Cities</a></li>
+            <li><a href="#" onclick="showPage('pricing'); return false;">Pricing</a></li>
+            <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+            <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+            <li><a href="#" class="cta-btn" onclick="showPage('download'); return false;">Download App</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     HOME PAGE
+═══════════════════════════════════════════════════ -->
+<div id="home" class="page active">
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <div class="live-indicator"></div>
+                Now live in Kathmandu, Pokhara & Lalitpur
+            </div>
+            <h1>The <em>right</em> space.<br>Right now.</h1>
+            <p class="hero-subtitle">
+                Real-time discovery of cafés, libraries, and co-working spaces that match your needs and vibe — before you even leave home.
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary" onclick="showPage('download'); return false;">
+                    Get Started
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="btn-secondary" onclick="showPage('features'); return false;">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Why Spacia</div>
+                <h2>Never waste a trip again</h2>
+                <p class="section-subtitle">Live occupancy data, environment tagging, and AI predictions to help you find the perfect space every time.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </div>
+                    <h3>Live Occupancy</h3>
+                    <p>See real-time crowd levels updated every few minutes via partner sensors and user check-ins. Know before you go.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h3>Vibe Intelligence</h3>
+                    <p>Spaces tagged by noise level, purpose, and amenities. Match the environment to your intent — quiet focus or collaborative energy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>AI Predictions</h3>
+                    <p>Our ML model forecasts peak hours based on historical data. Plan your day around quiet windows, not the crowds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <h3>Smart Filters</h3>
+                    <p>Filter by wifi speed, power outlets, noise level, seating comfort. Find spaces that actually work for you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Community Driven</h3>
+                    <p>Real reviews from real people. Share tips, favourite spots, and hidden gems with the Spacia community.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3>Save Favourites</h3>
+                    <p>Bookmark your go-to spots and get alerts when they hit your ideal crowd level. Build your personal rotation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Simple Process</div>
+                <h2>How it works</h2>
+                <p class="section-subtitle">Three simple steps to finding your perfect space</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Tell us what you need</h3>
+                    <p>Quiet focus? Group meeting? Coffee date? Select your purpose and preferences.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>See live options</h3>
+                    <p>Browse nearby spaces with real-time crowd levels, vibes, and availability.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Go with confidence</h3>
+                    <p>Head to your chosen spot knowing it's the right environment, right now.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <h2>Growing in Nepal</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">3,200+</div>
+                    <div class="stat-label">Monthly Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">120+</div>
+                    <div class="stat-label">Partner Venues</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Cities Live</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8 mo</div>
+                    <div class="stat-label">Since Launch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to find your space?</h2>
+            <p>Join students, freelancers, and professionals across Nepal who never waste a trip again.</p>
+            <a href="#" class="btn-white" onclick="showPage('download'); return false;">Download Spacia Now</a>
+        </div>
+    </section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     FEATURES PAGE
+═══════════════════════════════════════════════════ -->
+<div id="features" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Features</div>
+            <h1>Everything you need to<br><em>find your perfect space</em></h1>
+            <p class="section-subtitle">Intelligent tools designed for students, freelancers, and urban professionals across Nepal</p>
+        </div>
+
+        <div class="feature-detail">
+            <div class="feature-detail-text">
+                <div class="section-tag">Core Feature</div>
+                <h3>Live Occupancy — See it before you go</h3>
+                <p>Spacia pulls real-time crowd data from partner venue sensors and aggregated user check-ins. The occupancy meter refreshes every 3–5 minutes, so what you see is what you get when you arrive.</p>
+                <ul class="check-list">
+                    <li>Colour-coded crowd indicators (green / yellow / red)</li>
+                    <li>Average visit duration so you know wait times</li>
+                    <li>Historical trend chart for each venue</li>
+                    <li>Push alerts when your saved spot drops to "quiet"</li>
+                </ul>
+            </div>
+            <div class="feature-detail-visual">📡</div>
+        </div>
+
+        <div class="feature-detail reverse">
+            <div class="feature-detail-text">
+                <div class="section-tag">AI Engine</div>
+                <h3>Smart Predictions powered by ML</h3>
+                <p>Our in-house machine learning model analyses patterns from over 8 months of local venue data. It predicts busyness up to 3 hours ahead — letting you plan study blocks, meetings, and creative sessions around reality, not hope.</p>
+                <ul class="check-list">
+                    <li>3-hour occupancy forecast per venue</li>
+                    <li>Trained specifically on Kathmandu, Pokhara & Lalitpur patterns</li>
+                    <li>Adjusts for public holidays, load-shedding hours, and local events</li>
+                    <li>Gets smarter with every check-in</li>
+                </ul>
+            </div>
+            <div class="feature-detail-visual">🤖</div>
+        </div>
+
+        <div class="feature-detail">
+            <div class="feature-detail-text">
+                <div class="section-tag">Vibe & Filters</div>
+                <h3>Vibe Intelligence — match mood to space</h3>
+                <p>Every venue in our network is tagged by the community across 12 dimensions — noise level, natural light, WiFi reliability, power outlets, seating comfort, and more. Filter by what matters to you and surface only the spaces that fit.</p>
+                <ul class="check-list">
+                    <li>Quiet / moderate / buzzy noise tagging</li>
+                    <li>WiFi speed verified monthly (in Mbps)</li>
+                    <li>Study-friendly vs. social vs. creative space labels</li>
+                    <li>Nepali tea / coffee availability, of course ☕</li>
+                </ul>
+            </div>
+            <div class="feature-detail-visual">🎯</div>
+        </div>
+
+        <div class="feature-detail reverse">
+            <div class="feature-detail-text">
+                <div class="section-tag">Community</div>
+                <h3>Reviews & Community Tips</h3>
+                <p>Spacia is built on trust. Every rating comes from a verified visit. Users share short tips like "best corner table for calls" or "avoid after 4pm on Fridays" — the kind of local knowledge no map app can give you.</p>
+                <ul class="check-list">
+                    <li>Verified-visit reviews only</li>
+                    <li>Quick tip cards from regulars</li>
+                    <li>Upvote helpful tips</li>
+                    <li>Report outdated info instantly</li>
+                </ul>
+            </div>
+            <div class="feature-detail-visual">💬</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CITIES PAGE
+═══════════════════════════════════════════════════ -->
+<div id="cities" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Locations</div>
+            <h1>Live across <em>Nepal</em></h1>
+            <p class="section-subtitle">Expanding city by city, neighbourhood by neighbourhood</p>
+        </div>
+
+        <div style="margin-top:2rem;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap:2rem;">
+
+                <div class="city-card">
+                    <div class="city-card-header">
+                        <span class="city-status-live">● Live Now</span>
+                        <h3>🏔️ Kathmandu</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>Our home city and largest market. Coverage spans Thamel, New Road, Lazimpat, Durbarmarg, Patan, and Baneshwor — from heritage courtyard cafés to modern co-working spaces.</p>
+                        <div class="city-stats">
+                            <div>
+                                <div class="city-stat-num">72</div>
+                                <div class="city-stat-lbl">Partner Venues</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">2,100+</div>
+                                <div class="city-stat-lbl">Monthly Users</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">8 mo</div>
+                                <div class="city-stat-lbl">On Platform</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="city-card">
+                    <div class="city-card-header">
+                        <span class="city-status-live">● Live Now</span>
+                        <h3>🌄 Pokhara</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>Nepal's tourism and digital-nomad capital. Lakeside and Newroad areas are packed with cafés popular with remote workers. Launched early 2025 and growing steadily.</p>
+                        <div class="city-stats">
+                            <div>
+                                <div class="city-stat-num">31</div>
+                                <div class="city-stat-lbl">Partner Venues</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">720+</div>
+                                <div class="city-stat-lbl">Monthly Users</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">5 mo</div>
+                                <div class="city-stat-lbl">On Platform</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="city-card">
+                    <div class="city-card-header">
+                        <span class="city-status-live">● Live Now</span>
+                        <h3>🏛️ Lalitpur (Patan)</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>A growing hub for creatives and tech startups. Mangalbazar, Pulchowk, and Jawalakhel neighbourhoods have a thriving café culture with strong student demand.</p>
+                        <div class="city-stats">
+                            <div>
+                                <div class="city-stat-num">19</div>
+                                <div class="city-stat-lbl">Partner Venues</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">410+</div>
+                                <div class="city-stat-lbl">Monthly Users</div>
+                            </div>
+                            <div>
+                                <div class="city-stat-num">3 mo</div>
+                                <div class="city-stat-lbl">On Platform</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="city-card" style="opacity:0.75;">
+                    <div class="city-card-header">
+                        <span class="city-status-soon">⏳ Coming Q3 2025</span>
+                        <h3>🏙️ Bhaktapur</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>Heritage city with an emerging youth culture and growing number of study cafés near Bhaktapur Multiple Campus and Suryavinayak area.</p>
+                    </div>
+                </div>
+
+                <div class="city-card" style="opacity:0.75;">
+                    <div class="city-card-header">
+                        <span class="city-status-soon">⏳ Coming Q3 2025</span>
+                        <h3>🌿 Chitwan (Bharatpur)</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>Fast-growing city with Tribhuvan University affiliates and a rising demand for co-working options among healthcare and agri-tech students.</p>
+                    </div>
+                </div>
+
+                <div class="city-card" style="opacity:0.75;">
+                    <div class="city-card-header">
+                        <span class="city-status-soon">⏳ Coming Q4 2025</span>
+                        <h3>🎓 Dharan</h3>
+                    </div>
+                    <div class="city-card-body">
+                        <p>Eastern Nepal's education hub. BP Koirala Institute and Purwanchal University create a large captive audience of students seeking focused study spaces.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="background:var(--primary-light); border:1px solid var(--primary); border-radius:20px; padding:2.5rem; margin-top:3rem; text-align:center;">
+            <div class="section-tag">Venue Owners</div>
+            <h3 style="font-family:'Fraunces',serif; font-size:2rem; margin-bottom:0.75rem;">Is your café or co-working space in Nepal?</h3>
+            <p style="color:var(--text-muted); max-width:600px; margin:0 auto 2rem;">Join our partner network. We drive foot traffic, fill your quiet hours, and give you real data about your customers — for free.</p>
+            <a href="#" class="btn-primary" onclick="showPage('partner'); return false;">Become a Partner Venue</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PRICING PAGE
+═══════════════════════════════════════════════════ -->
+<div id="pricing" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Pricing</div>
+            <h1>Simple, transparent pricing<br>in <em>Nepali Rupees</em></h1>
+            <p class="section-subtitle">No hidden fees. Cancel anytime. Prices designed for the Nepali market.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Free</div>
+                <div class="plan-price">रू 0</div>
+                <div class="plan-desc">Perfect to get started</div>
+                <ul class="plan-features">
+                    <li>Real-time occupancy (3 venues/day)</li>
+                    <li>Basic search &amp; map view</li>
+                    <li>Up to 5 saved venues</li>
+                    <li>Community reviews</li>
+                    <li>Noise &amp; WiFi tags</li>
+                </ul>
+                <a href="#" class="btn-secondary" style="width:100%; text-align:center; display:block; padding:0.85rem;" onclick="showPage('download'); return false;">Get Started Free</a>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">MOST POPULAR</div>
+                <div class="plan-name highlight">Pro</div>
+                <div class="plan-price">रू 149<span>/mo</span></div>
+                <div class="plan-desc">≈ the price of one cup of coffee</div>
+                <ul class="plan-features">
+                    <li>Everything in Free</li>
+                    <li>Unlimited real-time occupancy</li>
+                    <li>AI 3-hour predictions</li>
+                    <li>Unlimited saved venues</li>
+                    <li>Smart crowd alerts</li>
+                    <li>Advanced filters (WiFi speed, outlets)</li>
+                    <li>Offline cached maps</li>
+                    <li>Priority in-app support</li>
+                </ul>
+                <a href="#" class="btn-primary" style="width:100%; text-align:center; display:block; padding:0.85rem;" onclick="showPage('download'); return false;">Upgrade to Pro</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Teams</div>
+                <div class="plan-price">रू 449<span>/mo</span></div>
+                <div class="plan-desc">For small teams &amp; startups</div>
+                <ul class="plan-features">
+                    <li>Everything in Pro</li>
+                    <li>Up to 5 team members</li>
+                    <li>Shared venue collections</li>
+                    <li>Team calendar sync</li>
+                    <li>Usage analytics dashboard</li>
+                    <li>Dedicated support channel</li>
+                </ul>
+                <a href="#" class="btn-secondary" style="width:100%; text-align:center; display:block; padding:0.85rem;" onclick="showPage('contact'); return false;">Contact Sales</a>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:3rem; padding:2rem; background:var(--primary-light); border-radius:16px;">
+            <p style="color:var(--text-muted);">🎓 <strong>Student discount</strong> — Verify your student ID and get Pro for <strong>रू 99/mo</strong>. Available for all Nepali university students.</p>
+        </div>
+
+        <div style="margin-top:4rem;">
+            <h3 style="font-family:'Fraunces',serif; font-size:1.8rem; margin-bottom:2rem; text-align:center;">Frequently Asked Questions</h3>
+            <div style="max-width:700px; margin:0 auto;">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Can I switch between plans?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Yes — upgrade or downgrade any time from the app settings. Changes take effect at the start of your next billing cycle. No penalties.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>How do I pay? Do you accept eSewa / Khalti?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Yes! We accept eSewa, Khalti, ConnectIPS, and standard bank cards. All transactions are in NPR.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>Is there a free trial for Pro?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">New users get a 14-day Pro trial when they first download the app — no card required.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h4>What happens to my data if I cancel?</h4>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">Your saved venues and review history stay intact. You simply revert to the Free tier limits.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     DOWNLOAD APP PAGE
+═══════════════════════════════════════════════════ -->
+<div id="download" class="page">
+    <div class="container">
+        <div class="download-hero">
+            <div class="section-tag">Download</div>
+            <h1>Get <em>Spacia</em> on your phone</h1>
+            <p class="section-subtitle">Available on iOS and Android. Free to download, free to start.</p>
+            <div class="app-stores">
+                <a href="#" class="app-btn">
+                    <span class="store-icon">🍎</span>
+                    <div>
+                        <div class="small">Download on the</div>
+                        <div class="big">App Store</div>
+                    </div>
+                </a>
+                <a href="#" class="app-btn">
+                    <span class="store-icon">▶</span>
+                    <div>
+                        <div class="small">Get it on</div>
+                        <div class="big">Google Play</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div class="qr-placeholder">📱</div>
+                    <p>Scan to download</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card" style="text-align:center;">
+                <div style="font-size:3rem; margin-bottom:1rem;">⚡</div>
+                <h3>Instant Setup</h3>
+                <p>Create an account in under 60 seconds. Allow location, pick your city, and you're live.</p>
+            </div>
+            <div class="content-card" style="text-align:center;">
+                <div style="font-size:3rem; margin-bottom:1rem;">📶</div>
+                <h3>Works on Slow Connections</h3>
+                <p>Optimised for Nepal's 3G/4G networks. Loads quickly even in low-signal areas.</p>
+            </div>
+            <div class="content-card" style="text-align:center;">
+                <div style="font-size:3rem; margin-bottom:1rem;">🔋</div>
+                <h3>Battery Friendly</h3>
+                <p>Background updates are minimal. The app won't drain your battery on a long study session.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ABOUT PAGE
+═══════════════════════════════════════════════════ -->
+<div id="about" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">About Us</div>
+            <h1>Built in Nepal,<br><em>for Nepal</em></h1>
+            <p class="section-subtitle">We're a student-founded team on a mission to eliminate wasted trips and help people find the right environment for every task</p>
+        </div>
+
+        <div class="about-story">
+            <h3>The Problem We're Solving</h3>
+            <p>Every day, thousands of students, freelancers, and remote workers in Kathmandu waste 20–40 minutes travelling to cafés, libraries, or co-working spaces — only to find them packed, noisy, or lacking power sockets.</p>
+            <p>Map apps show you ratings from three months ago. Review platforms tell you what a space is like on average — not right now. Nobody provides real-time intelligence about crowd levels, noise, or vibe.</p>
+            <p>Spacia changes this. We combine user check-ins and machine learning to create Nepal's first real-time, intent-matched space discovery platform. The result? No more wasted trips. No more settling. Just the right space, right when you need it.</p>
+        </div>
+
+        <div class="section-header" style="margin-bottom:2rem;">
+            <div class="section-tag">The Team</div>
+            <h2>Meet the founders</h2>
+            <p class="section-subtitle">Five friends from Kathmandu who got tired of arriving at full cafés</p>
+        </div>
+
+        <div class="team-grid">
+            <!-- Grish Pradhan -->
+            <div class="team-card">
+                <div class="team-photo-wrap" onclick="document.getElementById('photo-grish').click()" title="Click to upload photo">
+                    <div class="team-avatar" id="avatar-grish">G</div>
+                    <div class="team-photo-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload Photo
+                    </div>
+                    <input type="file" accept="image/*" class="team-photo-input" id="photo-grish" onchange="setTeamPhoto(this,'avatar-grish')">
+                </div>
+                <h4>Grish Pradhan</h4>
+                <div class="role">CEO & Co-founder</div>
+                <div class="bio">Leads product vision and business strategy. Obsessed with user experience and building things that matter in the local context.</div>
+            </div>
+
+            <!-- Subeg Suwal -->
+            <div class="team-card">
+                <div class="team-photo-wrap" onclick="document.getElementById('photo-subeg').click()" title="Click to upload photo">
+                    <div class="team-avatar" id="avatar-subeg">S</div>
+                    <div class="team-photo-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload Photo
+                    </div>
+                    <input type="file" accept="image/*" class="team-photo-input" id="photo-subeg" onchange="setTeamPhoto(this,'avatar-subeg')">
+                </div>
+                <h4>Subeg Suwal</h4>
+                <div class="role">CTO & Co-founder</div>
+                <div class="bio">Architect of Spacia's real-time data pipeline and mobile app. Believes good infrastructure is invisible but essential.</div>
+            </div>
+
+            <!-- Nayan Shakya -->
+            <div class="team-card">
+                <div class="team-photo-wrap" onclick="document.getElementById('photo-nayan').click()" title="Click to upload photo">
+                    <div class="team-avatar" id="avatar-nayan">N</div>
+                    <div class="team-photo-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload Photo
+                    </div>
+                    <input type="file" accept="image/*" class="team-photo-input" id="photo-nayan" onchange="setTeamPhoto(this,'avatar-nayan')">
+                </div>
+                <h4>Nayan Shakya</h4>
+                <div class="role">Head of Design & Co-founder</div>
+                <div class="bio">Crafts every screen, icon, and interaction. Champions accessible design that works for everyone from Thamel to Pokhara.</div>
+            </div>
+
+            <!-- Dipesh Giri -->
+            <div class="team-card">
+                <div class="team-photo-wrap" onclick="document.getElementById('photo-dipesh').click()" title="Click to upload photo">
+                    <div class="team-avatar" id="avatar-dipesh">D</div>
+                    <div class="team-photo-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload Photo
+                    </div>
+                    <input type="file" accept="image/*" class="team-photo-input" id="photo-dipesh" onchange="setTeamPhoto(this,'avatar-dipesh')">
+                </div>
+                <h4>Dipesh Giri</h4>
+                <div class="role">CPO & Co-founder</div>
+                <div class="bio">Drives product roadmap and user research. Spent months talking to café owners and students across Kathmandu before writing a single line of code.</div>
+            </div>
+
+            <!-- Yogendra Badu -->
+            <div class="team-card">
+                <div class="team-photo-wrap" onclick="document.getElementById('photo-yogendra').click()" title="Click to upload photo">
+                    <div class="team-avatar" id="avatar-yogendra">Y</div>
+                    <div class="team-photo-overlay">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload Photo
+                    </div>
+                    <input type="file" accept="image/*" class="team-photo-input" id="photo-yogendra" onchange="setTeamPhoto(this,'avatar-yogendra')">
+                </div>
+                <h4>Yogendra Badu</h4>
+                <div class="role">Head of Growth & Co-founder</div>
+                <div class="bio">Manages partnerships, venue onboarding, and community growth. The person who convinced 120+ café owners to join Spacia.</div>
+            </div>
+        </div>
+
+        <div class="content-grid" style="margin-top:4rem;">
+            <div class="content-card">
+                <h3>🚀 Our Vision</h3>
+                <p>To become the default way people discover and choose physical spaces for work, study, and collaboration — starting in Nepal and growing across South Asia.</p>
+            </div>
+            <div class="content-card">
+                <h3>💪 Our Values</h3>
+                <p>User-first design, radical data transparency, community trust, and sustainability. We build tools people want to use every single day.</p>
+            </div>
+            <div class="content-card">
+                <h3>📈 Where We Are</h3>
+                <p>3,200+ monthly active users across 3 Nepali cities in just 8 months. 120+ partner venues. Expanding to Bhaktapur and Bharatpur by Q3 2025.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CAREERS PAGE
+═══════════════════════════════════════════════════ -->
+<div id="careers" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Careers</div>
+            <h1>Join the <em>Spacia</em> team</h1>
+            <p class="section-subtitle">We're a small, ambitious team building something real for Nepal. If you care about craft and local impact, let's talk.</p>
+        </div>
+
+        <div class="about-story">
+            <h3>Life at Spacia</h3>
+            <p>We work out of a co-working space in Lazimpat (naturally, one we vetted on our own app). The team is flat, the problems are real, and every person has meaningful ownership over their work.</p>
+            <p>We offer flexible hours, a learning budget, and the chance to be part of building Nepal's first real-time urban discovery platform from the ground up.</p>
+        </div>
+
+        <h3 style="font-family:'Fraunces',serif; font-size:1.8rem; margin-bottom:1.5rem;">Open Roles</h3>
+
+        <div class="job-card">
+            <div>
+                <span class="job-tag">Engineering</span>
+                <h4>React Native Developer</h4>
+                <p>Help us build and polish the mobile app used by thousands of people daily across Nepal.</p>
+                <div class="job-meta">
+                    <span>📍 Kathmandu (Hybrid)</span>
+                    <span>⏱ Full-time</span>
+                    <span>💰 Negotiable</span>
+                </div>
+            </div>
+            <a href="mailto:careers@spacia.app" class="btn-primary" style="white-space:nowrap;">Apply Now</a>
+        </div>
+
+        <div class="job-card">
+            <div>
+                <span class="job-tag">Data</span>
+                <h4>ML / Data Engineer (Part-time)</h4>
+                <p>Work on our occupancy prediction model and real-time data pipelines. Ideal for a final-year CS student.</p>
+                <div class="job-meta">
+                    <span>📍 Remote (Nepal)</span>
+                    <span>⏱ Part-time / Internship</span>
+                    <span>💰 Stipend + equity discussion</span>
+                </div>
+            </div>
+            <a href="mailto:careers@spacia.app" class="btn-primary" style="white-space:nowrap;">Apply Now</a>
+        </div>
+
+        <div class="job-card">
+            <div>
+                <span class="job-tag">Operations</span>
+                <h4>City Operations Lead — Pokhara</h4>
+                <p>Own venue onboarding and partner relationships in Pokhara. Must be based in Pokhara.</p>
+                <div class="job-meta">
+                    <span>📍 Pokhara (On-site)</span>
+                    <span>⏱ Full-time</span>
+                    <span>💰 Competitive</span>
+                </div>
+            </div>
+            <a href="mailto:careers@spacia.app" class="btn-primary" style="white-space:nowrap;">Apply Now</a>
+        </div>
+
+        <div class="job-card">
+            <div>
+                <span class="job-tag">Design</span>
+                <h4>UI / UX Design Intern</h4>
+                <p>Assist Nayan on new feature design, user research sessions, and design system maintenance.</p>
+                <div class="job-meta">
+                    <span>📍 Kathmandu (Hybrid)</span>
+                    <span>⏱ 3-month internship</span>
+                    <span>💰 Paid internship</span>
+                </div>
+            </div>
+            <a href="mailto:careers@spacia.app" class="btn-primary" style="white-space:nowrap;">Apply Now</a>
+        </div>
+
+        <div style="text-align:center; margin-top:3rem; padding:2.5rem; background:var(--primary-light); border-radius:20px;">
+            <h3 style="font-family:'Fraunces',serif; font-size:1.6rem; margin-bottom:0.75rem;">Don't see your role?</h3>
+            <p style="color:var(--text-muted); margin-bottom:1.5rem;">We hire for attitude and potential. Send us a note about who you are and what you'd build.</p>
+            <a href="mailto:careers@spacia.app" class="btn-primary">careers@spacia.app</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     BLOG PAGE
+═══════════════════════════════════════════════════ -->
+<div id="blog" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Blog</div>
+            <h1>Stories from <em>Spacia</em></h1>
+            <p class="section-subtitle">Behind-the-scenes, product updates, and essays on urban life in Nepal</p>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:var(--primary-light);">☕</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Product</span>
+                    <h4>How we built real-time occupancy tracking for Kathmandu's cafés</h4>
+                    <p>No expensive IoT hardware. Just smart use of user check-ins, WiFi probe data, and a bit of ML magic.</p>
+                    <div class="blog-meta">
+                        <span>Subeg Suwal</span>
+                        <span>May 2025</span>
+                        <span>8 min read</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:#FFF8E7;">🏙️</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Urban Life</span>
+                    <h4>Where do Kathmandu's remote workers actually go to work?</h4>
+                    <p>We surveyed 400 freelancers. The answers were surprising — and shaped our product roadmap.</p>
+                    <div class="blog-meta">
+                        <span>Dipesh Giri</span>
+                        <span>Apr 2025</span>
+                        <span>6 min read</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:#F0F4FF;">📊</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Data</span>
+                    <h4>Six months of data: what we learned about Nepali café patterns</h4>
+                    <p>Thursdays at 2pm are the worst. Tuesdays before 11am are golden. A breakdown of our occupancy dataset.</p>
+                    <div class="blog-meta">
+                        <span>Grish Pradhan</span>
+                        <span>Mar 2025</span>
+                        <span>10 min read</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:#F9F0FF;">🎨</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Design</span>
+                    <h4>Designing for load-shedding: UX lessons from building in Nepal</h4>
+                    <p>How power cuts, slow data, and device diversity shaped every decision in our UI.</p>
+                    <div class="blog-meta">
+                        <span>Nayan Shakya</span>
+                        <span>Feb 2025</span>
+                        <span>5 min read</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:#FFF0F0;">🤝</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Growth</span>
+                    <h4>How we onboarded 120 venues in 8 months with zero marketing budget</h4>
+                    <p>Pure hustle, cold walks, and a very persuasive pitch about foot traffic analytics.</p>
+                    <div class="blog-meta">
+                        <span>Yogendra Badu</span>
+                        <span>Jan 2025</span>
+                        <span>7 min read</span>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-thumb" style="background:var(--primary-light);">🚀</div>
+                <div class="blog-body">
+                    <span class="blog-tag">Company</span>
+                    <h4>Why we built Spacia in Nepal instead of moving abroad</h4>
+                    <p>A personal note from the founding team about building locally and the opportunities we see.</p>
+                    <div class="blog-meta">
+                        <span>Grish Pradhan</span>
+                        <span>Sep 2024</span>
+                        <span>4 min read</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PRESS KIT PAGE
+═══════════════════════════════════════════════════ -->
+<div id="presskit" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Press Kit</div>
+            <h1>Spacia in the <em>media</em></h1>
+            <p class="section-subtitle">Logos, fact sheets, and founder bios for journalists and partners. For enquiries: <a href="mailto:press@spacia.app" style="color:var(--primary);">press@spacia.app</a></p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; max-width:900px; margin:0 auto;">
+            <div>
+                <h3 style="font-family:'Fraunces',serif; font-size:1.5rem; margin-bottom:1.5rem;">Quick Facts</h3>
+                <table style="width:100%; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Founded</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">September 2024</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Headquarters</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">Lazimpat, Kathmandu</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Cities Live</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">3 (Nepal)</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Partner Venues</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">120+</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Monthly Users</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">3,200+</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.75rem 0; color:var(--text-muted); font-size:0.9rem;">Stage</td>
+                        <td style="padding:0.75rem 0; font-weight:600;">Pre-seed / Raising seed</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <h3 style="font-family:'Fraunces',serif; font-size:1.5rem; margin-bottom:1.5rem;">Downloads</h3>
+                <div class="press-asset">
+                    <div class="press-icon">🟢</div>
+                    <div>
+                        <h4>Logo Pack</h4>
+                        <p>SVG, PNG (light + dark, colour + mono)</p>
+                    </div>
+                    <div class="press-dl"><a href="mailto:press@spacia.app" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.85rem;">Request</a></div>
+                </div>
+                <div class="press-asset">
+                    <div class="press-icon">📄</div>
+                    <div>
+                        <h4>Fact Sheet</h4>
+                        <p>One-page PDF with key stats &amp; bios</p>
+                    </div>
+                    <div class="press-dl"><a href="mailto:press@spacia.app" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.85rem;">Request</a></div>
+                </div>
+                <div class="press-asset">
+                    <div class="press-icon">🖼️</div>
+                    <div>
+                        <h4>Screenshots</h4>
+                        <p>App screens, high-res (iOS &amp; Android)</p>
+                    </div>
+                    <div class="press-dl"><a href="mailto:press@spacia.app" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.85rem;">Request</a></div>
+                </div>
+                <div class="press-asset">
+                    <div class="press-icon">👤</div>
+                    <div>
+                        <h4>Founder Headshots</h4>
+                        <p>Hi-res photos of all 5 co-founders</p>
+                    </div>
+                    <div class="press-dl"><a href="mailto:press@spacia.app" class="btn-primary" style="padding:0.5rem 1.2rem; font-size:0.85rem;">Request</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     HELP CENTER PAGE
+═══════════════════════════════════════════════════ -->
+<div id="help" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Help Center</div>
+            <h1>How can we <em>help you?</em></h1>
+            <p class="section-subtitle">Answers to the most common questions. Can't find what you need? Email <a href="mailto:hello@spacia.app" style="color:var(--primary);">hello@spacia.app</a></p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin-bottom:3rem;">
+            <div class="content-card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:2.5rem; margin-bottom:0.75rem;">📱</div>
+                <h3>Getting Started</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Account setup, city selection, and first search</p>
+            </div>
+            <div class="content-card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:2.5rem; margin-bottom:0.75rem;">💳</div>
+                <h3>Billing & Plans</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">Payments, upgrades, cancellations</p>
+            </div>
+            <div class="content-card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:2.5rem; margin-bottom:0.75rem;">📡</div>
+                <h3>Occupancy Data</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">How the data is collected and how accurate it is</p>
+            </div>
+            <div class="content-card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:2.5rem; margin-bottom:0.75rem;">🏢</div>
+                <h3>Venue Partners</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem;">For café &amp; co-working space owners</p>
+            </div>
+        </div>
+
+        <div style="max-width:700px; margin:0 auto;">
+            <h3 style="font-family:'Fraunces',serif; font-size:1.8rem; margin-bottom:1.5rem;">Frequently Asked</h3>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>How accurate is the occupancy data?</h4>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">We aggregate multiple signals — user check-ins, time-of-day patterns, and historical data — to estimate occupancy. In venues with active check-ins the data is very reliable. In quieter venues our predictions are based on historical models, which may be less precise.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>Does Spacia work without internet?</h4>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">Pro and Teams subscribers can cache their saved venues for offline access. Live occupancy and search require an internet connection.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>My favourite café isn't on Spacia. How do I add it?</h4>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">Tap the "Suggest a venue" button in the app (Settings → Suggest a Venue) and submit the details. We review suggestions and onboard qualifying venues within 2–3 weeks.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>Can I delete my account?</h4>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">Yes. Go to Settings → Account → Delete Account. All your data is permanently removed within 30 days, in line with our privacy policy.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>Which payment methods do you accept?</h4>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">We accept eSewa, Khalti, ConnectIPS, and major credit/debit cards. All payments are processed in Nepali Rupees (NPR).</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PARTNER WITH US PAGE
+═══════════════════════════════════════════════════ -->
+<div id="partner" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Partner With Us</div>
+            <h1>Put your venue on the <em>map</em></h1>
+            <p class="section-subtitle">Join 120+ cafés, libraries, and co-working spaces across Nepal that use Spacia to attract the right customers at the right time</p>
+        </div>
+
+        <div style="max-width:800px; margin:0 auto;">
+            <h3 style="font-family:'Fraunces',serif; font-size:1.8rem; margin-bottom:1rem;">Benefits of being a Partner Venue</h3>
+            <div>
+                <div class="partner-benefit">
+                    <div class="partner-benefit-icon">📈</div>
+                    <div>
+                        <h4>Fill your quiet hours</h4>
+                        <p>Spacia users actively search for spaces in real time. Appearing on the platform means you get foot traffic during off-peak hours when you need it most.</p>
+                    </div>
+                </div>
+                <div class="partner-benefit">
+                    <div class="partner-benefit-icon">📊</div>
+                    <div>
+                        <h4>Free venue analytics</h4>
+                        <p>See how many people viewed your venue, when your peak hours are, and what filters people use to find you — data you can act on.</p>
+                    </div>
+                </div>
+                <div class="partner-benefit">
+                    <div class="partner-benefit-icon">⭐</div>
+                    <div>
+                        <h4>Verified reviews</h4>
+                        <p>Only users who checked in can leave a review. Your rating reflects real visits, not fake reviews, building authentic reputation.</p>
+                    </div>
+                </div>
+                <div class="partner-benefit">
+                    <div class="partner-benefit-icon">🆓</div>
+                    <div>
+                        <h4>100% free for venues</h4>
+                        <p>Listing on Spacia is completely free for venue partners. We monetise through our user subscriptions, not through commissions on your business.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:var(--primary); border-radius:24px; padding:3rem; text-align:center; margin-top:3rem; color:white;">
+                <h3 style="font-family:'Fraunces',serif; font-size:2rem; margin-bottom:1rem; color:white;">Ready to get listed?</h3>
+                <p style="opacity:0.9; margin-bottom:2rem;">Send us your venue name, address, and a brief description. We'll have you live within 5 working days.</p>
+                <a href="mailto:partners@spacia.app" class="btn-white">partners@spacia.app</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     INVESTORS PAGE
+═══════════════════════════════════════════════════ -->
+<div id="investors" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Investors</div>
+            <h1>Backing Nepal's first<br><em>real-time space platform</em></h1>
+            <p class="section-subtitle">We're raising our seed round. Here's why we think this is a big opportunity.</p>
+        </div>
+
+        <div style="max-width:900px; margin:0 auto;">
+            <div class="about-story">
+                <h3>The Opportunity</h3>
+                <p>Nepal has over 1.5 million university students and a rapidly growing class of remote workers and freelancers — all competing for limited café and co-working space. The problem of wasted trips is universal and acutely felt in dense urban centres like Kathmandu.</p>
+                <p>Spacia solves a daily friction point for a large, underserved urban audience. Our real-time data moat — built through 8 months of check-ins, venue partnerships, and a trained ML model — is difficult for a competitor to replicate quickly.</p>
+                <p>We believe Spacia becomes the default urban discovery layer for South Asia's next 500 million smartphone users, starting with the cities we already know best.</p>
+            </div>
+
+            <h3 style="font-family:'Fraunces',serif; font-size:1.8rem; margin-bottom:1.5rem;">Traction</h3>
+            <div class="metric-row">
+                <div class="metric-box">
+                    <div class="num">3,200+</div>
+                    <div class="lbl">Monthly Active Users</div>
+                </div>
+                <div class="metric-box">
+                    <div class="num">120+</div>
+                    <div class="lbl">Partner Venues</div>
+                </div>
+                <div class="metric-box">
+                    <div class="num">3</div>
+                    <div class="lbl">Cities Live</div>
+                </div>
+                <div class="metric-box">
+                    <div class="num">8 mo</div>
+                    <div class="lbl">Since Launch</div>
+                </div>
+                <div class="metric-box">
+                    <div class="num">40%</div>
+                    <div class="lbl">MoM User Growth</div>
+                </div>
+                <div class="metric-box">
+                    <div class="num">68%</div>
+                    <div class="lbl">30-day Retention</div>
+                </div>
+            </div>
+
+            <div class="raise-box">
+                <h3>Seed Round — Raising रू 2 Crore</h3>
+                <p>We're seeking रू 2 Crore (approx. USD 150k) to expand to 3 more Nepali cities, grow the engineering team, and accelerate venue partnerships.</p>
+                <a href="mailto:investors@spacia.app" class="btn-white">investors@spacia.app</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CONTACT PAGE
+═══════════════════════════════════════════════════ -->
+<div id="contact" class="page">
+    <div class="container">
+        <div class="page-hero">
+            <div class="section-tag">Get in Touch</div>
+            <h1>Let's <em>talk</em></h1>
+            <p class="section-subtitle">Whether you're a user, venue partner, or investor — we'd love to hear from you</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="c-icon">📧</div>
+                <h3>General Inquiries</h3>
+                <p>For general questions, feedback, or support</p>
+                <a href="mailto:hello@spacia.app">hello@spacia.app</a>
+            </div>
+            <div class="contact-card">
+                <div class="c-icon">🏢</div>
+                <h3>Venue Partnerships</h3>
+                <p>Interested in becoming a Spacia partner venue?</p>
+                <a href="mailto:partners@spacia.app">partners@spacia.app</a>
+            </div>
+            <div class="contact-card">
+                <div class="c-icon">💼</div>
+                <h3>Investors</h3>
+                <p>We're raising our seed round. Let's connect.</p>
+                <a href="mailto:investors@spacia.app">investors@spacia.app</a>
+            </div>
+            <div class="contact-card">
+                <div class="c-icon">💻</div>
+                <h3>Careers</h3>
+                <p>Join our growing team building Nepal's future of space discovery</p>
+                <a href="mailto:careers@spacia.app">careers@spacia.app</a>
+            </div>
+            <div class="contact-card">
+                <div class="c-icon">📰</div>
+                <h3>Press</h3>
+                <p>Media inquiries, interviews, and press kit requests</p>
+                <a href="mailto:press@spacia.app">press@spacia.app</a>
+            </div>
+            <div class="contact-card">
+                <div class="c-icon">📍</div>
+                <h3>Office</h3>
+                <p>Lazimpat, Kathmandu<br>Bagmati Province, Nepal</p>
+                <a href="https://spacia.app" target="_blank">spacia.app</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <div class="logo-dot"></div>
+                Spacia
+            </div>
+            <p>Nepal's real-time space discovery platform for students, freelancers, and urban professionals.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="#" onclick="showPage('features'); return false;">Features</a></li>
+                <li><a href="#" onclick="showPage('cities'); return false;">Cities</a></li>
+                <li><a href="#" onclick="showPage('pricing'); return false;">Pricing</a></li>
+                <li><a href="#" onclick="showPage('download'); return false;">Download App</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#" onclick="showPage('about'); return false;">About Us</a></li>
+                <li><a href="#" onclick="showPage('careers'); return false;">Careers</a></li>
+                <li><a href="#" onclick="showPage('blog'); return false;">Blog</a></li>
+                <li><a href="#" onclick="showPage('presskit'); return false;">Press Kit</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+                <li><a href="#" onclick="showPage('help'); return false;">Help Center</a></li>
+                <li><a href="#" onclick="showPage('partner'); return false;">Partner with Us</a></li>
+                <li><a href="#" onclick="showPage('investors'); return false;">Investors</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>© 2025 Spacia. All rights reserved. Made with ❤️ in Kathmandu.</div>
+        <div class="social-links">
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="Facebook">f</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Photo upload handler
+    function setTeamPhoto(input, avatarId) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const avatar = document.getElementById(avatarId);
+            avatar.innerHTML = '<img src="' + e.target.result + '" alt="Team member photo">';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Nav scroll
+    window.addEventListener('scroll', () => {
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Page navigation
+    function showPage(pageName) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageName);
+        if (target) target.classList.add('active');
+
+        // Update nav active state
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const navMap = {
+            home: 'Home', features: 'Features', cities: 'Cities',
+            pricing: 'Pricing', about: 'About', contact: 'Contact', download: 'Download App'
+        };
+        const navLabel = navMap[pageName];
+        if (navLabel) {
+            const match = Array.from(document.querySelectorAll('.nav-links a')).find(a =>
+                a.textContent.trim() === navLabel
+            );
+            if (match) match.classList.add('active');
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // FAQ toggle
+    function toggleFaq(el) {
+        el.parentElement.classList.toggle('open');
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.feature-card, .content-card, .step, .city-card, .blog-card, .team-card, .pricing-card, .job-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    });
+</script>
+</body>
+</html>
